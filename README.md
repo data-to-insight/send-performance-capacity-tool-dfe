@@ -1,51 +1,110 @@
-# send-performance-capacity-tool-dfe
-Tool for SEND performance and capacity based on DfE published research (https://assets.publishing.service.gov.uk/media/69834976f13d4f72241ca9de/Time_spent_on_process_for_new_education__health_and_care_plans_by_local_authority_professionals_research_report.pdf) and SEN2 data.
 
-SEN2 data is published yearly around June/July. The tool read the assessments and requests file directly from the web: https://explore-education-statistics.service.gov.uk/find-statistics/education-health-and-care-plans/2025. This will need to be pointed again after each census release. 
+# SEND Performance and Capacity Tool (DfE)
 
-The open source Python code has been used to clean the data needed to generate four forecasting models which have been made available in the SEND EHCNA Team Capacity Tool (download from D2I website). 
+![Version Badge](https://img.shields.io/badge/version-1.0.0-blue)
+![Licence Badge](https://img.shields.io/badge/licence-MIT-green)
 
-The SEND EHCNA Team Capacity Tool is a self‑diagnostic workforce modelling tool designed to support Local Authorities in identifying capacity gaps across their SEND services, including Educational Psychology, SEND Casework, and SEND Management.
-The tool incorporates published SEN2 data for All Requests Received in Year and applies a suite of four different forecasting approaches, allowing users to select the method most appropriate to their local context and trend patterns. These approaches help LAs estimate future demand and assess whether their workforce structure is sufficient to meet statutory timescales and caseload expectations for the EHCNA process.
-To reflect real‑world practice, the tool also allows users to set the percentage of a worker’s time allocated to the EHCNA process. This means the model can account for the significant proportion of staff time required for other statutory and non‑statutory activities, such as early intervention, consultations, reviews, tribunals, school support, and cross‑agency collaboration. By adjusting this availability factor, LAs can see the true staffing need after accounting for competing priorities.
-Overall, the tool provides a transparent, flexible, and evidence‑informed way for LAs to understand their SEND workforce capacity, identify pressure points, and plan more effectively for future demand.
+Tool for SEND performance and capacity based on published DfE research and SEN2 data.
 
-The dataset includes four different forecasting models. Each model produces a percentage growth estimate for the next year based on historic trends in EHC request volumes (published SEN2 data). Each model is designed to capture a slightly different type of behaviour in the data. 
-The same approcah is applyed to refusal to assess and refusal to issue rates
+- DfE Research Report:  
+  https://assets.publishing.service.gov.uk/media/69834976f13d4f72241ca9de/Time_spent_on_process_for_new_education__health_and_care_plans_by_local_authority_professionals_research_report.pdf  
 
-Option 1 — Crude Average YoY %
-This method takes the average of all available year‑on‑year percentage changes.
-It treats every year equally and is useful when the LA’s trend is relatively flat or when only limited information is available.
-How it’s calculated:
-- Compute YoY % for each year
-- Take the simple average of all YoY % values
+- SEN2 Data Source:  
+  https://explore-education-statistics.service.gov.uk/find-statistics/education-health-and-care-plans/2025
 
-Option 2 — Last‑Year Only YoY %
-This method uses only the most recent year’s percentage change as the forecast for the next year.
-It is useful when there has been a sharp change recently, and the recent behaviour is the most important indicator.
-How it’s calculated:
-Use the YoY % between the latest year and the one before it
-Apply that same percentage as next year’s growth
+SEN2 data is published yearly around June or July. The tool reads the Assessments and Requests file directly from the web, so the link will need updating after each census release.
 
-Option 3 — Weighted Average of the Last 3 Years
-This method looks at the last 3 YoY % values but gives more weight to recent years.
-It is useful when recent behaviour is important, but the forecast should not rely entirely on last year alone.
-How it’s calculated:
-Take the three most recent YoY % changes
-Apply weights (e.g., 1 for oldest, 2 for middle, 3 for most recent)
-Compute the weighted average
+---
 
-Option 4 — Linear Trend YoY %
-This method fits a straight-line trend through all available YoY % values and projects that line forward into the next year.
-It is helpful when the LA’s requests follow a long‑term upward or downward pattern, or when there is a lot of year‑to‑year volatility.
-How it’s calculated:
-Plot YoY % against year
-Fit a simple linear regression line (y = ax + b)
-Use the line to predict the YoY % for the next year
+## Overview of the Tool
 
-Together, these four models provide:
-a long-term average (Option 1)
-a short-term indicator (Option 2)
-a balanced recent trend (Option 3)
-a long-term direction of travel (Option 4)
-This allows each LA to receive the forecast model that best reflects its historical behaviour.
+The open source Python code is used to clean SEN2 data and generate four forecasting models. These models are incorporated into the SEND EHCNA Team Capacity Tool (available from the D2I website).
+
+The tool is a self diagnostic workforce modelling resource designed to support Local Authorities in identifying capacity gaps across SEND services, including:
+
+- Educational Psychology  
+- SEND Casework  
+- SEND Management  
+
+It uses published SEN2 counts for all requests received in the year and applies four different forecasting approaches. Users can choose the method most suitable for their local trend patterns.
+
+The tool also lets users set the proportion of a worker's time allocated to EHCNA activity. This reflects real world practice where staff spend time on:
+
+- Early intervention  
+- Consultations  
+- Reviews  
+- Tribunals  
+- School support  
+- Cross agency collaboration  
+
+This helps Local Authorities estimate the true staffing requirement once competing priorities are accounted for.
+
+Overall, tool provides transparent, flexible and evidence informed method for understanding SEND workforce capacity, identifying pressure points and planning for future demand.
+
+---
+
+## Forecasting Models
+
+The dataset includes 4 forecasting models. Each model produces a percentage growth estimate for the next year based on historic EHC request volumes. The same method is applied to refusal to assess and refusal to issue rates.
+
+### Option 1: Crude Average Year on Year Percentage
+
+Simple average of all available year on year percentages.  
+Useful when the trend is relatively flat or there is limited historic data.
+
+**Calculation**
+
+- Compute each year's percentage change  
+- Take the simple average  
+
+---
+
+### Option 2: Last Year Only Year on Year Percentage
+
+Uses only the most recent year on year change.  
+Useful when a recent shift is the most important indicator.
+
+**Calculation**
+
+- Take the most recent percentage change  
+- Apply it to forecast the next year  
+
+---
+
+### Option 3: Weighted Average of the Last Three Years
+
+Uses the latest three year on year percentages with more weight on recent years.  
+Useful when recent behaviour is important but should not fully dictate the forecast.
+
+**Calculation**
+
+- Identify the latest three year on year values  
+- Apply weights, for example:  
+  - Oldest: 1  
+  - Middle: 2  
+  - Most recent: 3  
+- Compute the weighted average  
+
+---
+
+### Option 4: Linear Trend Year on Year Percentage
+
+Fits a linear trend through all available year on year values and projects it forward.  
+Useful when there is a consistent upward or downward pattern or high volatility.
+
+**Calculation**
+
+- Plot year on year percentage by year  
+- Fit a linear regression line  
+- Use it to predict next year’s value  
+
+---
+
+## Summary of Model Purposes
+
+- **Option 1**: Long term average  
+- **Option 2**: Short term indicator  
+- **Option 3**: Balanced recent trend  
+- **Option 4**: Long term direction of travel  
+
+These options let each Local Authority choose the forecast approach that best reflects its historical pattern.
